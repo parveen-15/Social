@@ -225,7 +225,7 @@ export default function AuthPage() {
               <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"
                 style={{ boxShadow: '0 0 20px rgba(6,182,212,0.5)' }} />
               <p className="text-white/80 text-sm font-semibold">Signing you in…</p>
-              <p className="text-white/30 text-xs mt-1">Connecting to server</p>
+              <p className="text-white/30 text-xs mt-1">Server is waking up, please wait up to 30s</p>
             </div>
           </div>
         )}

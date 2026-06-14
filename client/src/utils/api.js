@@ -5,7 +5,7 @@ const API_BASE = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : '/api';
 
-export const api = axios.create({ baseURL: API_BASE, timeout: 8000 });
+export const api = axios.create({ baseURL: API_BASE, timeout: 60000 });
 
 // Attach the Firebase ID token to every request automatically
 api.interceptors.request.use(async (config) => {
