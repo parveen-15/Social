@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { height: -webkit-fill-available; }
+  body {
+    background-color: #0B0F14;
+    color: #FFFFFF;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #06B6D4; border-radius: 999px; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply font-bold px-4 py-2 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed;
+    background-color: #06B6D4;
+    color: #0B0F14;
+    box-shadow: 0 0 15px rgba(6,182,212,0.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: #67E8F9;
+    box-shadow: 0 0 25px rgba(6,182,212,0.6);
+  }
+  .btn-secondary {
+    @apply font-semibold px-4 py-2 rounded-xl transition-all duration-200;
+    background-color: #111827;
+    color: #ffffff;
+    border: 1px solid #1E293B;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(6,182,212,0.4);
+  }
+  .btn-outline {
+    @apply font-semibold px-4 py-2 rounded-xl transition-all duration-200;
+    border: 1px solid rgba(6,182,212,0.4);
+    color: #06B6D4;
+  }
+  .btn-outline:hover {
+    background-color: rgba(6,182,212,0.1);
+  }
+  .card {
+    @apply rounded-2xl;
+    background-color: #111827;
+    border: 1px solid #1E293B;
+  }
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl text-sm transition-all duration-200 focus:outline-none;
+    background-color: #0B0F14;
+    border: 1px solid #1E293B;
+    color: #ffffff;
+  }
+  .input::placeholder { color: rgba(255,255,255,0.2); }
+  .input:focus {
+    border-color: rgba(6,182,212,0.5);
+    box-shadow: 0 0 0 2px rgba(6,182,212,0.15);
+  }
+  .nav-active {
+    background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(6,182,212,0.05));
+    border: 1px solid rgba(6,182,212,0.3);
+    color: #06B6D4;
+    box-shadow: 0 0 15px rgba(6,182,212,0.15), inset 0 0 10px rgba(6,182,212,0.05);
+  }
+}
+
+/* ─── Responsive helpers ─────────────────────── */
+.chat-height {
+  height: calc(100dvh - 5rem); /* account for bottom nav on mobile */
+}
+@media (min-width: 768px) {
+  .chat-height {
+    height: 100dvh;
+  }
+}
+
+/* ─── Keyframe animations ─────────────────────── */
+@keyframes kissLeft {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%       { transform: translateX(18px) rotate(-12deg); }
+}
+@keyframes kissRight {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%       { transform: translateX(-18px) rotate(12deg); }
+}
+@keyframes floatHeart {
+  0%   { transform: translateY(0) scale(0.5); opacity: 1; }
+  100% { transform: translateY(-120px) scale(0); opacity: 0; }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50%       { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px #06B6D4, 0 0 20px rgba(6,182,212,0.3); }
+  50%       { box-shadow: 0 0 25px #06B6D4, 0 0 50px rgba(6,182,212,0.5); }
+}
+@keyframes bounceHeart {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.5); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Animation utility classes ──────────────── */
+@keyframes particleFloat {
+  0%   { transform: translateY(0px) translateX(0px); }
+  33%  { transform: translateY(-18px) translateX(10px); }
+  66%  { transform: translateY(8px) translateX(-8px); }
+  100% { transform: translateY(-12px) translateX(6px); }
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.animate-kiss-left    { animation: kissLeft 2s ease-in-out infinite; }
+.animate-kiss-right   { animation: kissRight 2s ease-in-out infinite; }
+.animate-sparkle      { animation: sparkle 1.5s ease-in-out infinite; }
+.animate-twinkle      { animation: twinkle 3s ease-in-out infinite; }
+.animate-glow-pulse   { animation: glowPulse 2s ease-in-out infinite; }
+.animate-bounce-heart { animation: bounceHeart 0.6s ease-out; }
+.animate-fade-in      { animation: fadeIn 0.6s ease-out forwards; }
+.animate-slide-up     { animation: slideUp 0.5s ease-out forwards; }
+.animate-slide-up-1   { animation: slideUp 0.5s ease-out 0.05s both; }
+.animate-slide-up-2   { animation: slideUp 0.5s ease-out 0.12s both; }
+.animate-slide-up-3   { animation: slideUp 0.5s ease-out 0.20s both; }
+.animate-slide-up-4   { animation: slideUp 0.5s ease-out 0.28s both; }
+.animate-slide-up-5   { animation: slideUp 0.5s ease-out 0.36s both; }
