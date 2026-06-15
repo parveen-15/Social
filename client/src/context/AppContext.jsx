@@ -71,41 +71,53 @@ export function AppProvider({ children }) {
 
   // Listen to Firebase auth state changes
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (fbUser) => {
-      setFirebaseUser(fbUser);
+    // Safety net: if Firebase doesn't respond in 8s, unblock the UI anyway
+    const fallback = setTimeout(() => setAuthLoading(false), 8000);
 
-      if (!fbUser) {
-        setCurrentUser(null);
-        setAuthLoading(false);
-        return;
-      }
+    let unsub = () => {};
+    try {
+      unsub = onAuthStateChanged(auth, async (fbUser) => {
+        clearTimeout(fallback);
+        setFirebaseUser(fbUser);
 
-      try {
-        setSyncError('');
-        setSyncing(true);
-        const rawId = fbUser.providerData[0]?.providerId || 'password';
-        const provider = rawId === 'password' ? 'email'
-          : rawId === 'google.com' ? 'google'
-          : rawId === 'phone' ? 'phone'
-          : 'email';
-        const res = await syncAuthUser(provider);
-        const user = res.data;
-        setCurrentUser(user);
-        connectSocket(user);
-        await askNotificationPermission();
-      } catch (err) {
-        setCurrentUser(null);
-        const msg = err?.code === 'ECONNABORTED'
-          ? 'Server took too long to respond. Is the server running?'
-          : err?.response?.data?.error || err?.message || 'Server error. Is the server running?';
-        setSyncError(msg);
-        console.error('Auth sync failed:', msg);
-      } finally {
-        setSyncing(false);
-        setAuthLoading(false);
-      }
-    });
-    return unsub;
+        if (!fbUser) {
+          setCurrentUser(null);
+          setAuthLoading(false);
+          return;
+        }
+
+        try {
+          setSyncError('');
+          setSyncing(true);
+          const rawId = fbUser.providerData[0]?.providerId || 'password';
+          const provider = rawId === 'password' ? 'email'
+            : rawId === 'google.com' ? 'google'
+            : rawId === 'phone' ? 'phone'
+            : 'email';
+          const res = await syncAuthUser(provider);
+          const user = res.data;
+          setCurrentUser(user);
+          connectSocket(user);
+          await askNotificationPermission();
+        } catch (err) {
+          setCurrentUser(null);
+          const msg = err?.code === 'ECONNABORTED'
+            ? 'Server took too long to respond. Is the server running?'
+            : err?.response?.data?.error || err?.message || 'Server error. Is the server running?';
+          setSyncError(msg);
+          console.error('Auth sync failed:', msg);
+        } finally {
+          setSyncing(false);
+          setAuthLoading(false);
+        }
+      });
+    } catch (err) {
+      clearTimeout(fallback);
+      console.error('Firebase onAuthStateChanged error:', err);
+      setAuthLoading(false);
+    }
+
+    return () => { clearTimeout(fallback); unsub(); };
   }, [connectSocket]);
 
   useEffect(() => {

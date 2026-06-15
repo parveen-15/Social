@@ -1,5 +1,25 @@
+import { Component } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
+
+class ErrorBoundary extends Component {
+  state = { error: null };
+  static getDerivedStateFromError(error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0B0F14', color: '#fff', flexDirection: 'column', gap: 16, padding: 24 }}>
+          <p style={{ color: '#f87171', fontWeight: 600 }}>Something went wrong loading the app.</p>
+          <p style={{ color: '#ffffff80', fontSize: 13 }}>{this.state.error?.message}</p>
+          <button onClick={() => window.location.reload()} style={{ background: '#06b6d4', color: '#000', border: 'none', borderRadius: 8, padding: '8px 20px', cursor: 'pointer', fontWeight: 600 }}>
+            Reload
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 import Layout from './components/layout/Layout';
 import Landing from './pages/Landing';
 import AuthPage from './pages/AuthPage';
@@ -65,10 +85,12 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppProvider>
-        <AppRoutes />
-      </AppProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AppProvider>
+          <AppRoutes />
+        </AppProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
