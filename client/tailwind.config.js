@@ -4,12 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#0B0F14',
-        card: '#111827',
-        accent: '#06B6D4',
-        'accent-dark': '#0891B2',
-        'accent-light': '#67E8F9',
-        brd: '#1E293B',
+        bg:            '#080C14',
+        card:          '#0D1526',
+        'card-hover':  '#111D35',
+        accent:        '#3B82F6',
+        'accent-dark': '#2563EB',
+        'accent-light':'#60A5FA',
+        brd:           '#1A2744',
+        'brd-light':   '#243354',
+        muted:         '#4B6A9B',
       },
     },
   },

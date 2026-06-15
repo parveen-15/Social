@@ -224,4 +224,43 @@ router.delete('/:id/friends/:friendId', async (req, res) => {
   }
 });
 
+// Delete account
+router.delete('/:id/account', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    const Post = require('../models/Post');
+    const Conversation = require('../models/Conversation');
+    const Message = require('../models/Message');
+
+    // Remove this user from everyone's friend/request lists
+    await User.updateMany(
+      { $or: [{ friends: id }, { friendRequests: id }, { sentRequests: id }] },
+      { $pull: { friends: id, friendRequests: id, sentRequests: id } }
+    );
+
+    // Delete user's posts
+    await Post.deleteMany({ user: id });
+
+    // Delete conversations and messages
+    const convs = await Conversation.find({ participants: id }).select('_id');
+    const convIds = convs.map(c => c._id);
+    await Message.deleteMany({ conversation: { $in: convIds } });
+    await Conversation.deleteMany({ _id: { $in: convIds } });
+
+    // Delete avatar file if stored locally
+    if (user.avatar && user.avatar.includes('/uploads/')) {
+      const filePath = path.join(__dirname, '../uploads/profiles', path.basename(user.avatar));
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    }
+
+    await User.findByIdAndDelete(id);
+    res.json({ message: 'Account deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

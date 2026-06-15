@@ -193,9 +193,9 @@ export default function AuthPage() {
     <div className="min-h-screen bg-bg flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(6,182,212,0.08) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%)' }} />
       <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%)', transform: 'translate(-50%,-50%)' }} />
+        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)', transform: 'translate(-50%,-50%)' }} />
 
       {/* invisible reCAPTCHA anchor */}
       <div ref={recaptchaRef} />
@@ -207,9 +207,11 @@ export default function AuthPage() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 justify-center mb-8 select-none">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #06B6D4, #0891B2)', boxShadow: '0 0 20px rgba(6,182,212,0.5)' }}>
-            <svg className="w-5 h-5 text-bg" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 0 20px rgba(59,130,246,0.5)' }}>
+            <img src="/logo.png" alt="logo" className="w-5 h-5 object-contain"
+              onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling.style.display='block'; }} />
+            <svg style={{display:'none'}} className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </div>
           <span className="font-black text-xl tracking-tight">
@@ -223,7 +225,7 @@ export default function AuthPage() {
             style={{ background: 'rgba(11,15,20,0.85)', backdropFilter: 'blur(8px)' }}>
             <div className="text-center">
               <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"
-                style={{ boxShadow: '0 0 20px rgba(6,182,212,0.5)' }} />
+                style={{ boxShadow: '0 0 20px rgba(59,130,246,0.5)' }} />
               <p className="text-white/80 text-sm font-semibold">Signing you in…</p>
               <p className="text-white/30 text-xs mt-1">Server is waking up, please wait up to 30s</p>
             </div>
@@ -231,8 +233,8 @@ export default function AuthPage() {
         )}
 
         {/* Card */}
-        <div className="rounded-2xl p-8 border border-white/8"
-          style={{ background: 'linear-gradient(145deg, rgba(17,24,39,0.9), rgba(11,15,20,0.95))', boxShadow: '0 24px 80px rgba(0,0,0,0.6)' }}>
+        <div className="rounded-2xl p-8"
+          style={{ background: 'linear-gradient(145deg, #0D1526, #080C14)', border: '1px solid #1A2744', boxShadow: '0 24px 80px rgba(0,0,0,0.6)' }}>
 
           {/* Login / Signup tab */}
           <div className="flex rounded-xl p-1 mb-8" style={{ background: 'rgba(255,255,255,0.04)' }}>
@@ -241,7 +243,7 @@ export default function AuthPage() {
                 className={`flex-1 py-2 rounded-lg text-sm font-bold capitalize transition-all duration-300 ${
                   tab === t ? 'text-bg' : 'text-white/35 hover:text-white/60'
                 }`}
-                style={tab === t ? { background: 'linear-gradient(135deg, #06B6D4, #0891B2)', boxShadow: '0 0 16px rgba(6,182,212,0.4)' } : {}}>
+                style={tab === t ? { background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 0 16px rgba(59,130,246,0.4)' } : {}}>
                 {t === 'login' ? 'Login' : 'Sign Up'}
               </button>
             ))}
@@ -298,10 +300,10 @@ export default function AuthPage() {
                 )}
 
                 <motion.button type="submit" disabled={loading}
-                  whileHover={{ scale: 1.02, boxShadow: '0 0 28px rgba(6,182,212,0.55)' }}
+                  whileHover={{ scale: 1.02, boxShadow: '0 0 28px rgba(59,130,246,0.55)' }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full py-3.5 rounded-xl font-bold text-sm text-bg disabled:opacity-50 transition-all"
-                  style={{ background: 'linear-gradient(135deg, #06B6D4, #0891B2)', boxShadow: '0 0 20px rgba(6,182,212,0.35)' }}>
+                  style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 0 20px rgba(59,130,246,0.35)' }}>
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
                       <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -336,7 +338,7 @@ export default function AuthPage() {
                 <motion.button type="submit" disabled={loading}
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                   className="w-full py-3.5 rounded-xl font-bold text-sm text-bg disabled:opacity-50"
-                  style={{ background: 'linear-gradient(135deg, #06B6D4, #0891B2)', boxShadow: '0 0 20px rgba(6,182,212,0.35)' }}>
+                  style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 0 20px rgba(59,130,246,0.35)' }}>
                   {loading ? 'Sending OTP…' : 'Send OTP'}
                 </motion.button>
               </motion.form>
@@ -362,7 +364,7 @@ export default function AuthPage() {
                 <motion.button type="submit" disabled={loading}
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                   className="w-full py-3.5 rounded-xl font-bold text-sm text-bg disabled:opacity-50"
-                  style={{ background: 'linear-gradient(135deg, #06B6D4, #0891B2)', boxShadow: '0 0 20px rgba(6,182,212,0.35)' }}>
+                  style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 0 20px rgba(59,130,246,0.35)' }}>
                   {loading ? 'Verifying…' : 'Verify OTP'}
                 </motion.button>
 
